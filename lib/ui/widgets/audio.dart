@@ -1,0 +1,192 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import '../widgets/PlayingControls.dart';
+import '../widgets/PositionSeekWidget.dart';
+import '../widgets/app_scaffold.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+
+class AudioPage extends StatefulWidget {
+  const AudioPage({Key? key}) : super(key: key);
+
+  @override
+  _AudioPageState createState() => _AudioPageState();
+}
+
+class _AudioPageState extends State<AudioPage>
+    with SingleTickerProviderStateMixin {
+  late AssetsAudioPlayer _assetsAudioPlayer;
+  final List<StreamSubscription> _subscriptions = [];
+  final audios = <Audio>[
+    //Audio.network(
+    //  'https://d14nt81hc5bide.cloudfront.net/U7ZRzzHfk8pvmW28sziKKPzK',
+    //  metas: Metas(
+    //    id: 'Invalid',
+    //    title: 'Invalid',
+    //    artist: 'Florent Champigny',
+    //    album: 'OnlineAlbum',
+    //    image: MetasImage.network(
+    //        'https://image.shutterstock.com/image-vector/pop-music-text-art-colorful-600w-515538502.jpg'),
+    //  ),
+    //),
+    Audio.network(
+      'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/springtide/Sounds_strange_weird_but_unmistakably_romantic_Vol1/springtide_-_03_-_We_Are_Heading_to_the_East.mp3',
+      metas: Metas(
+        id: 'Online',
+        title: 'Online',
+        artist: 'Florent Champigny',
+        album: 'OnlineAlbum',
+        // image: MetasImage.network('https://www.google.com')
+        image: const MetasImage.network(
+          'https://radiosurabhi.streamguys1.com//live1',
+            /*'https://image.shutterstock.com/image-vector/'
+                'pop-music-text-art-colorful-600w-515538502.jpg'*/),
+      ),
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _assetsAudioPlayer = AssetsAudioPlayer.newPlayer();
+    //_subscriptions.add(_assetsAudioPlayer.playlistFinished.listen((data) {
+    //  print('finished : $data');
+    //}));
+    //openPlayer();
+    _subscriptions.add(_assetsAudioPlayer.playlistAudioFinished.listen((data) {
+      print('playlistAudioFinished : $data');
+    }));
+    _subscriptions.add(_assetsAudioPlayer.audioSessionId.listen((sessionId) {
+      print('audioSessionId : $sessionId');
+    }));
+
+    openPlayer();
+  }
+
+  void openPlayer() async {
+    await _assetsAudioPlayer.open(
+      Playlist(audios: audios, startIndex: 0),
+      showNotification: true,
+      autoStart: false,
+    );
+  }
+
+  @override
+  void dispose() {
+    _assetsAudioPlayer.dispose();
+    print('dispose');
+    super.dispose();
+  }
+
+  Audio find(List<Audio> source, String fromPath) {
+    return source.firstWhere((element) => element.path == fromPath);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: NeumorphicTheme.baseColor(context),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: Image.asset("assets/images/landingscreen.jpg",
+                      fit: BoxFit.cover,)),
+                Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Container(
+                      // margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
+                        decoration: BoxDecoration(
+                          // borderRadius: BorderRadius.only(
+                          //  bottomLeft: Radius.circular(30.0),
+                          //   bottomRight: Radius.circular(30.0)),
+                          color: Colors.black,
+                        ),
+                        child: Container(
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.white,
+                            ),
+                            padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: _assetsAudioPlayer.builderCurrent(
+                                builder: (context, Playing? playing) {
+                                  return Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: <Widget>[
+                                        SizedBox(child:
+                                        _assetsAudioPlayer.builderLoopMode(
+                                          builder: (context, loopMode) {
+                                            return PlayerBuilder.isPlaying(
+                                                player: _assetsAudioPlayer,
+                                                builder: (context, isPlaying) {
+                                                  return PlayingControls(
+                                                    loopMode: loopMode,
+                                                    isPlaying: isPlaying,
+                                                    isPlaylist: true,
+                                                    onStop: () {
+                                                      _assetsAudioPlayer.stop();
+                                                    },
+                                                    toggleLoop: () {
+                                                      _assetsAudioPlayer
+                                                          .toggleLoop();
+                                                    },
+                                                    onPlay: () {
+                                                      _assetsAudioPlayer
+                                                          .playOrPause();
+                                                    },
+                                                    onNext: () {
+                                                      _assetsAudioPlayer.next(
+                                                          keepLoopMode: true);
+                                                    },
+                                                    onPrevious: () {
+                                                      _assetsAudioPlayer.previous();
+                                                    },
+                                                  );
+                                                });
+                                          },
+                                        )),
+                                        SizedBox(
+                                            width: 220,
+                                            child: _assetsAudioPlayer
+                                                .builderRealtimePlayingInfos(
+                                                builder: (context,
+                                                    RealtimePlayingInfos?
+                                                    infos) {
+                                                  if (infos == null) {
+                                                    return SizedBox();
+                                                  }
+                                                  //print('infos: $infos');
+                                                  return Column(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                    children: [
+                                                      PositionSeekWidget(
+                                                        currentPosition:
+                                                        infos.currentPosition,
+                                                        duration: infos.duration,
+                                                        seekTo: (to) {
+                                                          _assetsAudioPlayer.seek(to);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                })),
+                                      ]);
+                                })))),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
