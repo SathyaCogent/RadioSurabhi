@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:radiosurabhi/ui/widgets/audio.dart';
 
-import 'screens/home_page.dart';
+
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    switch (settings.name) {
+   switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => const AudioPage());
 
       default:
         return _errorRoute();

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:radiosurabhi/ui/screens/webview.dart';
 import '../widgets/PlayingControls.dart';
 import '../widgets/PositionSeekWidget.dart';
 import '../widgets/app_scaffold.dart';
@@ -40,9 +42,7 @@ class _AudioPageState extends State<AudioPage>
         album: 'OnlineAlbum',
         // image: MetasImage.network('https://www.google.com')
         image: const MetasImage.network(
-          'https://radiosurabhi.streamguys1.com//live1',
-            /*'https://image.shutterstock.com/image-vector/'
-                'pop-music-text-art-colorful-600w-515538502.jpg'*/),
+            'https://image.shutterstock.com/image-vector/pop-music-text-art-colorful-600w-515538502.jpg'),
       ),
     ),
   ];
@@ -93,100 +93,147 @@ class _AudioPageState extends State<AudioPage>
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    child: Image.asset("assets/images/landingscreen.jpg",
-                      fit: BoxFit.cover,)),
+                    height: MediaQuery.of(context).size.height * 0.78,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset("assets/images/landing.jpg",
+                        fit: BoxFit.cover)),
                 Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: Container(
-                      // margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        width: MediaQuery.of(context).size.width * 1,
+                        // margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                         padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
                         decoration: BoxDecoration(
                           // borderRadius: BorderRadius.only(
                           //  bottomLeft: Radius.circular(30.0),
                           //   bottomRight: Radius.circular(30.0)),
-                          color: Colors.black,
+                          color: HexColor("#002271"),
                         ),
                         child: Container(
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            decoration: BoxDecoration(
+                          /*  decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: Colors.white,
-                            ),
+                            ),*/
                             padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                            child: _assetsAudioPlayer.builderCurrent(
-                                builder: (context, Playing? playing) {
-                                  return Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: <Widget>[
-                                        SizedBox(child:
-                                        _assetsAudioPlayer.builderLoopMode(
-                                          builder: (context, loopMode) {
-                                            return PlayerBuilder.isPlaying(
-                                                player: _assetsAudioPlayer,
-                                                builder: (context, isPlaying) {
-                                                  return PlayingControls(
-                                                    loopMode: loopMode,
-                                                    isPlaying: isPlaying,
-                                                    isPlaylist: true,
-                                                    onStop: () {
-                                                      _assetsAudioPlayer.stop();
-                                                    },
-                                                    toggleLoop: () {
-                                                      _assetsAudioPlayer
-                                                          .toggleLoop();
-                                                    },
-                                                    onPlay: () {
-                                                      _assetsAudioPlayer
-                                                          .playOrPause();
-                                                    },
-                                                    onNext: () {
-                                                      _assetsAudioPlayer.next(
-                                                          keepLoopMode: true);
-                                                    },
-                                                    onPrevious: () {
-                                                      _assetsAudioPlayer.previous();
-                                                    },
-                                                  );
-                                                });
-                                          },
+                            child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                child: InkWell(
+
+                               /*   style: ElevatedButton.styleFrom(
+                                    //  primary: HexColor("#002271"),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      )),*/
+                                  child:  Container(
+                                      height: MediaQuery.of(context).size.height * 0.5,
+                                      child: Image.asset("assets/images/radiobutton.png",
                                         )),
-                                        SizedBox(
-                                            width: 220,
-                                            child: _assetsAudioPlayer
-                                                .builderRealtimePlayingInfos(
+                                  onTap: () async {
+                                    toWebView(context,
+                                        "https://player.streamguys.com/radiosurabhi/sgplayer/player.php",
+                                        title: 'Radio Surabhi');
+                                  },
+                                ))
+                            /*_assetsAudioPlayer.builderCurrent(
+                                builder: (context, Playing? playing) {
+                              return Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    SizedBox(child:
+                                        _assetsAudioPlayer.builderLoopMode(
+                                      builder: (context, loopMode) {
+                                        return PlayerBuilder.isPlaying(
+                                            player: _assetsAudioPlayer,
+                                            builder: (context, isPlaying) {
+                                              return PlayingControls(
+                                                loopMode: loopMode,
+                                                isPlaying: isPlaying,
+                                                isPlaylist: true,
+                                                onStop: () {
+                                                  _assetsAudioPlayer.stop();
+                                                },
+                                                toggleLoop: () {
+                                                  _assetsAudioPlayer
+                                                      .toggleLoop();
+                                                },
+                                                onPlay: () {
+                                                  _assetsAudioPlayer
+                                                      .playOrPause();
+                                                },
+                                                onNext: () {
+                                                  _assetsAudioPlayer.next(
+                                                      keepLoopMode: true);
+                                                },
+                                                onPrevious: () {
+                                                  _assetsAudioPlayer.previous();
+                                                },
+                                              );
+                                            });
+                                      },
+                                    )),
+                                    SizedBox(
+                                        width: 220,
+                                        child: _assetsAudioPlayer
+                                            .builderRealtimePlayingInfos(
                                                 builder: (context,
                                                     RealtimePlayingInfos?
-                                                    infos) {
-                                                  if (infos == null) {
-                                                    return SizedBox();
-                                                  }
-                                                  //print('infos: $infos');
-                                                  return Column(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                    children: [
-                                                      PositionSeekWidget(
-                                                        currentPosition:
-                                                        infos.currentPosition,
-                                                        duration: infos.duration,
-                                                        seekTo: (to) {
-                                                          _assetsAudioPlayer.seek(to);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                })),
-                                      ]);
-                                })))),
+                                                        infos) {
+                                          if (infos == null) {
+                                            return SizedBox();
+                                          }
+                                          //print('infos: $infos');
+                                          return Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              PositionSeekWidget(
+                                                currentPosition:
+                                                    infos.currentPosition,
+                                                duration: infos.duration,
+                                                seekTo: (to) {
+                                                  _assetsAudioPlayer.seek(to);
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        })),
+                                  ]);
+                            })*/
+                            ))),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<dynamic> toWebView(BuildContext context, String? url,
+      {String? title}) {
+    return navigateToPage(
+      context,
+      (context) {
+        return PageWebView(
+          url: url,
+          title: title,
+        );
+      },
+    );
+  }
+
+  Future navigateToPage(
+      BuildContext context, Function(BuildContext context) builder) {
+    return Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return builder(context);
+    }));
   }
 }
