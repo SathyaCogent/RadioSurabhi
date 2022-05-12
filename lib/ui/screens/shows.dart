@@ -120,7 +120,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].monday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -132,7 +132,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].tuesday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -144,7 +144,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].wednesday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -156,7 +156,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].thursday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -168,7 +168,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].friday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -180,7 +180,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].saturday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -192,7 +192,7 @@ class _ShowsPageState extends State<ShowsPage> {
               child: Text(showsModel.showsInfo[index].sunday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 14))),
+                      fontWeight: FontWeight.normal, fontSize: 13))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
