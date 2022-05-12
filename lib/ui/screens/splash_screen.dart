@@ -1,28 +1,27 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+
 import 'package:hexcolor/hexcolor.dart';
-import 'package:radiosurabhi/ui/widgets/audio.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
+  const SplashScreen({Key? key, this.notificationbyApp = false})
+      : super(key: key);
+  final bool notificationbyApp;
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool? notificationbyApp;
   @override
   void initState() {
     super.initState();
     Timer(
       const Duration(seconds: 4),
-      () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AudioPage()),
-      ),
+      () => Navigator.pushReplacementNamed(context, '/homepage'),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

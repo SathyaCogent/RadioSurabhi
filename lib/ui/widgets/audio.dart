@@ -34,7 +34,7 @@ class _AudioPageState extends State<AudioPage>
     //  ),
     //),
     Audio.network(
-      'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/springtide/Sounds_strange_weird_but_unmistakably_romantic_Vol1/springtide_-_03_-_We_Are_Heading_to_the_East.mp3',
+      '',
       metas: Metas(
         id: 'Online',
         title: 'Online',
@@ -96,7 +96,7 @@ class _AudioPageState extends State<AudioPage>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
-                    height: MediaQuery.of(context).size.height * 0.78,
+                    height: MediaQuery.of(context).size.height * 0.82,
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset("assets/images/landing.jpg",
                         fit: BoxFit.cover)),
@@ -114,18 +114,18 @@ class _AudioPageState extends State<AudioPage>
                         ),
                         child: Container(
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          /*  decoration: BoxDecoration(
+                            /*  decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: Colors.white,
                             ),*/
                             padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                             child: SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.05,
+                                MediaQuery.of(context).size.height * 0.05,
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 child: InkWell(
 
-                               /*   style: ElevatedButton.styleFrom(
+                                  /*   style: ElevatedButton.styleFrom(
                                     //  primary: HexColor("#002271"),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -134,14 +134,14 @@ class _AudioPageState extends State<AudioPage>
                                   child:  Container(
                                       height: MediaQuery.of(context).size.height * 0.5,
                                       child: Image.asset("assets/images/radiobutton.png",
-                                        )),
+                                      )),
                                   onTap: () async {
                                     toWebView(context,
                                         "https://player.streamguys.com/radiosurabhi/sgplayer/player.php",
-                                        title: 'Radio Surabhi');
+                                        );
                                   },
                                 ))
-                            /*_assetsAudioPlayer.builderCurrent(
+                          /*_assetsAudioPlayer.builderCurrent(
                                 builder: (context, Playing? playing) {
                               return Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -207,7 +207,7 @@ class _AudioPageState extends State<AudioPage>
                                         })),
                                   ]);
                             })*/
-                            ))),
+                        ))),
               ],
             ),
           ),
@@ -220,7 +220,7 @@ class _AudioPageState extends State<AudioPage>
       {String? title}) {
     return navigateToPage(
       context,
-      (context) {
+          (context) {
         return PageWebView(
           url: url,
           title: title,

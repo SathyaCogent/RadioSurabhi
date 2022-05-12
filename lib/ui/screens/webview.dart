@@ -48,8 +48,12 @@ class _PageWebView extends State<PageWebView> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.black, //change your color here
+              ),
               elevation: 0,
-              backgroundColor: HexColor("#3b29a1"),
+
+              backgroundColor: Colors.transparent,
               centerTitle: true,
               title: widget.title == null
                   ? null
