@@ -18,6 +18,7 @@ import '../widgets/app_scaffold.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+  static bool popupinfo = true;
 
   @override
   State<HomePage> createState() => _HomePageState();
