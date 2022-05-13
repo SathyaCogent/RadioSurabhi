@@ -121,16 +121,44 @@ class Data {
 class SocialMedia {
   SocialMedia({
     required this.facebook,
+    required this.twitter,
+    required this.youtube,
+    required this.linkedin,
+    required this.instagram,
+    required this.spotify,
+    required this.website,
+    required this.soundcloud,
   });
   late final String facebook;
+  late final String twitter;
+  late final String youtube;
+  late final String linkedin;
+  late final String instagram;
+  late final String spotify;
+  late final String website;
+  late final String soundcloud;
 
   SocialMedia.fromJson(Map<String, dynamic> json) {
     facebook = json['facebook'] ?? "null";
+    twitter = json['twitter'] ?? "null";
+    youtube = json['youTube'] ?? "null";
+    linkedin = json['linkedIn'] ?? "null";
+    instagram = json['instagram'] ?? "null";
+    spotify = json['spotify'] ?? "null";
+    website = json['website'] ?? "null";
+    soundcloud = json['soundCloud'] ?? "null";
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['facebook'] = facebook;
+    _data['twitter'] = twitter;
+    _data['youTube'] = youtube;
+    _data['linkedIn'] = linkedin;
+    _data['instagram'] = instagram;
+    _data['spotify'] = spotify;
+    _data['website'] = website;
+    _data['soundCloud'] = soundcloud;
     return _data;
   }
 }

@@ -27,14 +27,14 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
       heading: widget.hostdata.name,
       back: true,
       body:
-          SingleChildScrollView(child: _buildContent(context, widget.hostdata)),
+      SingleChildScrollView(child: _buildContent(context, widget.hostdata)),
     );
   }
 
   Widget _buildContent(BuildContext context, var hostData) {
     return Container(
         padding:
-            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+        const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
         alignment: Alignment.topLeft,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,26 +66,29 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
+                    filterData.socialMedia.facebook != 'null'
+                        ? InkWell(
                         onTap: filterData.socialMedia.facebook == "null"
                             ? null
                             : () async {
-                                AndroidIntent intent = AndroidIntent(
-                                  action: 'action_view',
-                                  data: filterData.socialMedia.facebook,
-                                );
-                                await intent.launch();
-                              },
+                          AndroidIntent intent = AndroidIntent(
+                            action: 'action_view',
+                            data: filterData.socialMedia.facebook,
+                          );
+                          await intent.launch();
+                        },
                         child: SizedBox(
                           width: 30,
                           child: SvgPicture.asset(
                             "assets/f.svg",
                             fit: BoxFit.contain,
                           ),
-                        )),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
+                        ))
+                        : Container(),
+                    if (filterData.socialMedia.facebook != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
                     // InkWell(
                     //   onTap: () async {},
                     //   child: SizedBox(
@@ -99,8 +102,15 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
                     // SizedBox(
                     //   width: MediaQuery.of(context).size.width * 0.03,
                     // ),
-                    InkWell(
-                      onTap: () async {},
+                    filterData.socialMedia.twitter != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.twitter,
+                        );
+                        await intent.launch();
+                      },
                       child: SizedBox(
                         width: 30,
                         child: SvgPicture.asset(
@@ -108,12 +118,21 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
                           fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    InkWell(
-                      onTap: () async {},
+                    )
+                        : Container(),
+                    if (filterData.socialMedia.twitter != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+                    filterData.socialMedia.linkedin != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.linkedin,
+                        );
+                        await intent.launch();
+                      },
                       child: SizedBox(
                         width: 30,
                         child: SvgPicture.asset(
@@ -121,12 +140,21 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
                           fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    InkWell(
-                      onTap: () async {},
+                    )
+                        : Container(),
+                    if (filterData.socialMedia.linkedin != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+                    filterData.socialMedia.instagram != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.instagram,
+                        );
+                        await intent.launch();
+                      },
                       child: SizedBox(
                         width: 30,
                         child: SvgPicture.asset(
@@ -134,12 +162,90 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
                           fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    InkWell(
-                      onTap: () async {},
+                    )
+                        : Container(),
+                    if (filterData.socialMedia.instagram != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+                    filterData.socialMedia.spotify != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.spotify,
+                        );
+                        await intent.launch();
+                      },
+                      child: SizedBox(
+                        width: 30,
+                        child: SvgPicture.asset(
+                          "assets/spotify.svg",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+                        : Container(),
+                    if (filterData.socialMedia.spotify != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+
+                    filterData.socialMedia.website != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.website,
+                        );
+                        await intent.launch();
+                      },
+                      child: SizedBox(
+                        width: 30,
+                        child: SvgPicture.asset(
+                          "assets/website.svg",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+                        : Container(),
+                    if (filterData.socialMedia.website != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+
+                    filterData.socialMedia.soundcloud != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.soundcloud,
+                        );
+                        await intent.launch();
+                      },
+                      child: SizedBox(
+                        width: 30,
+                        child: SvgPicture.asset(
+                          "assets/soundcloud.svg",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+                        : Container(),
+                    if (filterData.socialMedia.soundcloud != 'null')
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+
+                    filterData.socialMedia.youtube != 'null'
+                        ? InkWell(
+                      onTap: () async {
+                        AndroidIntent intent = AndroidIntent(
+                          action: 'action_view',
+                          data: filterData.socialMedia.youtube,
+                        );
+                        await intent.launch();
+                      },
                       child: SizedBox(
                         width: 30,
                         child: SvgPicture.asset(
@@ -147,7 +253,8 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
                           fit: BoxFit.contain,
                         ),
                       ),
-                    ),
+                    )
+                        : Container(),
                   ],
                 ))),
         Padding(
@@ -169,7 +276,7 @@ class _YourhosthomepageviewState extends State<Yourhosthomepageview> {
               itemBuilder: (BuildContext context, int index) {
                 return Textwidget(
                   data:
-                      filterData.description.blocks[index].data.text.toString(),
+                  filterData.description.blocks[index].data.text.toString(),
                   isheading1: false,
                   isheading2: false,
                   isheading3: false,

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "481125349274",
+    "project_id": "radiosurabhi-f32e6",
+    "storage_bucket": "radiosurabhi-f32e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481125349274:android:c63ea333d92fe01480ac23",
+        "android_client_info": {
+          "package_name": "com.cogent.radiosurabhi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481125349274-ljk3vd2ndv8oqgvea4033mh683oohtnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cogent.radiosurabhi",
+            "certificate_hash": "117223ed4bde3faba61661bcbe6fc16ffaac05e2"
+          }
+        },
+        {
+          "client_id": "481125349274-5c2sa7b9oet73vn11ggca8i82g5rt9rl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7H0ZndBL8IgWjPq4ABnQ-tgP6DFtrckQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481125349274-5c2sa7b9oet73vn11ggca8i82g5rt9rl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

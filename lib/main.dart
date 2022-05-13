@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:radiosurabhi/resources/api/api_base_helper.dart';
 import 'package:radiosurabhi/ui/route_generator.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -54,6 +55,7 @@ void callbackDispatcher() {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   HttpOverrides.global = MyHttpOverrides();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
@@ -88,12 +90,16 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   final String initialRoute;
   const MyApp({Key? key, this.initialRoute = '/'}) : super(key: key);
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Drawer Menu',
       debugShowCheckedModeBanner: false,
+      navigatorObservers: <NavigatorObserver>[observer],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

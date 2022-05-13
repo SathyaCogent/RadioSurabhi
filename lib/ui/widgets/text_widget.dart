@@ -36,8 +36,8 @@ class Textwidget extends StatelessWidget {
               : isheading2
                   ? 20
                   : isheading3
-                      ? 16
-                      : 14),
+                      ? 12
+                      : 12),
     );
   }
 }

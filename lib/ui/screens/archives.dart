@@ -6,6 +6,10 @@ import 'package:radiosurabhi/ui/widgets/stream.dart';
 import 'package:radiosurabhi/ui/widgets/text_widget.dart';
 import 'package:radiosurabhi/ui/widgets/youtubecontroller.dart';
 
+import '../../blocs/test_bloc.dart';
+
+
+
 class Archives extends StatefulWidget {
   const Archives({Key? key, this.istestimonials = false}) : super(key: key);
   final bool istestimonials;
@@ -15,12 +19,16 @@ class Archives extends StatefulWidget {
 
 class _ArchivesState extends State<Archives> {
   late ArchiveBloc archiveListBloc;
+  late TestBloc testListBloc;
   @override
   void initState() {
     super.initState();
 
     archiveListBloc = ArchiveBloc();
     archiveListBloc.getArchiveListdata();
+
+    testListBloc = TestBloc();
+    testListBloc.getTestListdata();
   }
 
   @override
@@ -28,7 +36,9 @@ class _ArchivesState extends State<Archives> {
     return AppScaffold(
         heading: !widget.istestimonials ? "Archives" : "Testimonials",
         back: true,
-        body: StreamWidget(archiveListBloc.archiveListStream, _buildContent));
+        body: widget.istestimonials
+            ? StreamWidget(testListBloc.testListStream, _buildContent)
+            : StreamWidget(archiveListBloc.archiveListStream, _buildContent));
   }
 
   Widget _buildContent(BuildContext context, var dataList) {
