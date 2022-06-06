@@ -6,6 +6,7 @@ class Textwidget extends StatelessWidget {
   final bool isheading1;
   final bool isheading2;
   final bool isheading3;
+  final bool isheading4;
   final bool isWhiteColor;
 
   const Textwidget({
@@ -14,6 +15,7 @@ class Textwidget extends StatelessWidget {
     this.isheading1 = false,
     this.isheading2 = false,
     this.isheading3 = false,
+    this.isheading4 = false,
     this.isWhiteColor = false,
   }) : super(key: key);
 
@@ -25,19 +27,21 @@ class Textwidget extends StatelessWidget {
       style: GoogleFonts.roboto(
           color: isWhiteColor
               ? Colors.white
-              : isheading1 || isheading2 || isheading3
+              : isheading1 || isheading2 || isheading3 || isheading4
                   ? Colors.black
                   : Colors.black87,
-          fontWeight: isheading1 || isheading2 || isheading3
+          fontWeight: isheading1 || isheading2 || isheading3 || isheading4
               ? FontWeight.bold
               : FontWeight.normal,
           fontSize: isheading1
-              ? 35
+              ? MediaQuery.of(context).size.width * 0.05
               : isheading2
-                  ? 20
+                  ? MediaQuery.of(context).size.width * 0.045
                   : isheading3
-                      ? 12
-                      : 12),
+                      ? MediaQuery.of(context).size.width * 0.030
+                      : isheading4
+                          ? 14
+                          : MediaQuery.of(context).size.width * 0.025),
     );
   }
 }

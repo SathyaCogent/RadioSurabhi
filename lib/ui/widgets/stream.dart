@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class StreamWidget extends StatefulWidget {
   const StreamWidget(this.stream, this.body,
@@ -36,12 +37,16 @@ class _StreamWidgetState extends State<StreamWidget> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return widget.loadingWidget ??
-              Center(
-                child: Center(
-                    child: CircularProgressIndicator(
-                        backgroundColor: Colors.black,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            HexColor('#46B04A')))),
+              const Center(
+                child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: LoadingIndicator(
+                        indicatorType: Indicator.ballTrianglePathColoredFilled,
+                        colors: [Colors.blue],
+                        strokeWidth: 1,
+                        backgroundColor: Colors.transparent,
+                        pathBackgroundColor: Colors.blue)),
               );
         } else {
           if (snapshot.hasData && widget.showpop && popupopen) {
