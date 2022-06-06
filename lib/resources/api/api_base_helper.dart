@@ -19,7 +19,7 @@ class FileObject {
 }
 
 class ApiBaseHelper {
-  static String fileBaseUrl = "http://api.radiosurabhi.com/";
+  static String fileBaseUrl = "https://api.radiosurabhi.com/";
   //"https://sfsuat.smartfarmspace.com/uatapi/";
   //"http://18.118.253.186:8000/devapi/";
   //"https://qa-api.smartfarmspace.com/uatapi";
