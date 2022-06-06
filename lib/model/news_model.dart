@@ -2,7 +2,7 @@ class NewsModel {
   NewsModel({
     required this.id,
     required this.name,
-     this.slug,
+    this.slug,
     required this.coverImage,
     required this.status,
     required this.shortDescription,
@@ -17,8 +17,8 @@ class NewsModel {
   late final String shortDescription;
   late final Description description;
   late final String coverImageP;
-  
-  NewsModel.fromJson(Map<String, dynamic> json){
+
+  NewsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     slug = null;
@@ -52,17 +52,17 @@ class Description {
   late final int time;
   late final List<Blocks> blocks;
   late final String version;
-  
-  Description.fromJson(Map<String, dynamic> json){
+
+  Description.fromJson(Map<String, dynamic> json) {
     time = json['time'];
-    blocks = List.from(json['blocks']).map((e)=>Blocks.fromJson(e)).toList();
+    blocks = List.from(json['blocks']).map((e) => Blocks.fromJson(e)).toList();
     version = json['version'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['time'] = time;
-    _data['blocks'] = blocks.map((e)=>e.toJson()).toList();
+    _data['blocks'] = blocks.map((e) => e.toJson()).toList();
     _data['version'] = version;
     return _data;
   }
@@ -75,8 +75,8 @@ class Blocks {
   });
   late final Data data;
   late final String type;
-  
-  Blocks.fromJson(Map<String, dynamic> json){
+
+  Blocks.fromJson(Map<String, dynamic> json) {
     data = Data.fromJson(json['data']);
     type = json['type'];
   }
@@ -92,20 +92,24 @@ class Blocks {
 class Data {
   Data({
     required this.text,
-    required this.alignment,
+    this.alignment,
+    this.level,
   });
   late final String text;
-  late final String alignment;
-  
-  Data.fromJson(Map<String, dynamic> json){
+  late String? alignment;
+  late int? level;
+
+  Data.fromJson(Map<String, dynamic> json) {
     text = json['text'];
-    alignment = json['alignment'];
+    alignment = json.containsKey('alignment') ? json['alignment'] : null;
+    level = json.containsKey('level') ? json['level'] : null;
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['text'] = text;
     _data['alignment'] = alignment;
+    _data['level'] = level;
     return _data;
   }
 }
