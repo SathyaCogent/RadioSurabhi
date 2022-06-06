@@ -24,10 +24,9 @@ class _NewsListPageState extends State<NewsListPage> {
   Widget build(BuildContext context) {
     return AppScaffold(
       heading: 'News and Events',
+      appicon: true,
       back: true,
-      body: SingleChildScrollView(
-        child: StreamWidget(newsListBloc.newsListStream, _buildContent),
-      ),
+      body: StreamWidget(newsListBloc.newsListStream, _buildContent),
     );
   }
 
@@ -94,13 +93,18 @@ class _NewsListPageState extends State<NewsListPage> {
               scrollDirection: Axis.vertical,
               physics: const ScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return Textwidget(
-                  data:
-                      filterData.description.blocks[index].data.text.toString(),
-                  isheading1: false,
-                  isheading2: false,
-                  isheading3: false,
-                );
+                if (filterData.description.blocks[index].data.text ==
+                    '&nbsp;&nbsp;') {
+                  return Container();
+                } else {
+                  return Padding(
+                      padding: EdgeInsets.only(bottom: 13),
+                      child: Text(
+                          filterData.description.blocks[index].data.text
+                              .toString()
+                              .replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' '),
+                          style: TextStyle(fontSize: 14, height: 1.6)));
+                }
               }),
         ),
       ],
@@ -111,9 +115,9 @@ class _NewsListPageState extends State<NewsListPage> {
       double screenheight) {
     return Image.network(
       assetname,
-      width: screenwidth * 0.85,
-      height: screenheight * 0.3,
-      fit: BoxFit.cover,
+      width: screenwidth * 0.95,
+      //height: screenheight * 0.3,
+      fit: BoxFit.contain,
     );
   }
 }

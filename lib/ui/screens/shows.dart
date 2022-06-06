@@ -23,7 +23,9 @@ class _ShowsPageState extends State<ShowsPage> {
   Widget build(BuildContext context) {
     return AppScaffold(
       heading: "Shows",
-      back: true,
+      bottombar: true,
+      appicon: true,
+       back: true,
       body: _getBodyWidget(),
     );
   }
@@ -103,7 +105,7 @@ class _ShowsPageState extends State<ShowsPage> {
       child: Center(
           child: Text(showsModel.showsInfo[index].timing,
               style:
-              const TextStyle(fontWeight: FontWeight.normal, fontSize: 14))),
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14))),
       width: 100,
       height: 56,
       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -115,84 +117,84 @@ class _ShowsPageState extends State<ShowsPage> {
     return Row(children: <Widget>[
       Row(children: <Widget>[
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].monday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].tuesday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].wednesday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].thursday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].friday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].saturday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#4d9de6') : Colors.white,
+          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
           child: Center(
               child: Text(showsModel.showsInfo[index].sunday,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 13))),
+                      fontWeight: FontWeight.bold, fontSize: 14))),
           width: 200,
           height: 56,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -245,11 +247,11 @@ class ShowsInfoModel {
         "Sports Column with Giri"),
     ShowsInfo(
         "04.00 to 07.00",
-        "Drive Time Special-మీ..రా..అంటేమీతో రాజేశ్వరి.",
-        "Drive Time Special-మీ..రా..అంటేమీతో రాజేశ్వరి.",
-        "Drive Time Special-మీ..రా..అంటేమీతో రాజేశ్వరి. ",
-        "Drive Time Special-మీ..రా..అంటేమీతో రాజేశ్వరి. ",
-        "Drive Time Special-మీ..రా..అంటేమీతో రాజేశ్వరి. ",
+        "Drive Time Special",
+        "Drive Time Special",
+        "Drive Time Special",
+        "Drive Time Special",
+        "Drive Time Special",
         "Drive Time With Ashwin",
         "Drive Time With Srikanth"),
     ShowsInfo(
@@ -271,56 +273,56 @@ Future<void> popup(BuildContext context) async {
     builder: (BuildContext context) {
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return AlertDialog(
-              backgroundColor: Colors.black87,
-              content: SingleChildScrollView(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Scroll from Right to Left to view details',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              color: HexColor('#ffffff'),
-                              fontFamily: "Roboto"),
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Center(
-                            child: Icon(
-                              Icons.swipe_left,
-                              color: HexColor('#ffffff'),
-                              size: 80,
-                            )),
-                        const SizedBox(height: 25),
-                        Center(
-                            child: SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.04,
-                                width: MediaQuery.of(context).size.width * 0.25,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: HexColor("#ffffff"),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(5.0),
-                                        )),
-                                    child: Text('ok',
-                                        style: TextStyle(
-                                            fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04,
-                                            fontFamily: "Roboto",
-                                            color: Colors.black)),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      setState(() {
-                                        HomePage.popupinfo = false;
-                                      });
-                                    }))),
-                      ])),
-            );
-          });
+        return AlertDialog(
+          backgroundColor: Colors.black87,
+          content: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text(
+                  'Scroll from Right to Left to view details',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.05,
+                      color: HexColor('#ffffff'),
+                      fontFamily: "Roboto"),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Center(
+                    child: Icon(
+                  Icons.swipe_left,
+                  color: HexColor('#ffffff'),
+                  size: 80,
+                )),
+                const SizedBox(height: 25),
+                Center(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.04,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: HexColor("#ffffff"),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                )),
+                            child: Text('ok',
+                                style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.04,
+                                    fontFamily: "Roboto",
+                                    color: Colors.black)),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              setState(() {
+                                HomePage.popupinfo = false;
+                              });
+                            }))),
+              ])),
+        );
+      });
     },
   );
 }

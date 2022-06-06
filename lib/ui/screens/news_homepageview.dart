@@ -20,6 +20,7 @@ class _NewshomepageviewState extends State<Newshomepageview> {
   Widget build(BuildContext context) {
     return AppScaffold(
       heading: widget.newsdata.name,
+      appicon: true,
       back: true,
       body:
           SingleChildScrollView(child: _buildContent(context, widget.newsdata)),
@@ -73,13 +74,26 @@ class _NewshomepageviewState extends State<Newshomepageview> {
               scrollDirection: Axis.vertical,
               physics: const ScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return Textwidget(
+                if (filterData.description.blocks[index].data.text ==
+                    '&nbsp;&nbsp;') {
+                  return Container();
+                } else {
+                  return Padding(
+                      padding: EdgeInsets.only(bottom: 13),
+                      child: Text(
+                          filterData.description.blocks[index].data.text
+                              .toString()
+                              .replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' '),
+                          style: TextStyle(fontSize: 14, height: 1.6)));
+                }
+
+                /* return Textwidget(
                   data:
                       filterData.description.blocks[index].data.text.toString(),
                   isheading1: false,
                   isheading2: false,
                   isheading3: false,
-                );
+                );*/
               }),
         ),
       ],
@@ -92,7 +106,7 @@ class _NewshomepageviewState extends State<Newshomepageview> {
       assetname,
       width: screenwidth * 0.85,
       height: screenheight * 0.3,
-      fit: BoxFit.cover,
+      fit: BoxFit.contain,
     );
   }
 }

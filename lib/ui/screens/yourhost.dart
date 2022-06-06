@@ -1,5 +1,6 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:radiosurabhi/blocs/host_bloc.dart';
 import 'package:radiosurabhi/ui/widgets/app_scaffold.dart';
 import 'package:radiosurabhi/ui/widgets/social_button.dart';
@@ -28,10 +29,9 @@ class _YourhostState extends State<Yourhost> {
   Widget build(BuildContext context) {
     return AppScaffold(
       heading: 'Your Host',
+      appicon: true,
       back: true,
-      body: SingleChildScrollView(
-        child: StreamWidget(hostListBloc.hostsListStream, _buildContent),
-      ),
+      body: StreamWidget(hostListBloc.hostsListStream, _buildContent),
     );
   }
 
@@ -47,7 +47,7 @@ class _YourhostState extends State<Yourhost> {
               const Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: Textwidget(
-                  data: "About us",
+                  data: "Your Host",
                   isheading1: false,
                   isheading2: true,
                   isheading3: false,
@@ -72,7 +72,7 @@ class _YourhostState extends State<Yourhost> {
     var screenheight = MediaQuery.of(context).size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 10.0),
@@ -84,67 +84,227 @@ class _YourhostState extends State<Yourhost> {
         filterData.socialMedia != null
             ? Padding(
                 padding: const EdgeInsets.only(top: 20.0),
-                child: Row(
-                  children: [
-                    //filterData.socialMedia.facebook != "null"
-                    // ? InkWell(
-                    //     child: const NeuButton(
-                    //       char: 'y',
-                    //     ),
-                    //     onTap: () async {
-                    //       AndroidIntent intent = const AndroidIntent(
-                    //         action: 'action_view',
-                    //         data: 'https://www.youtube.com/c/RadioSurabhi',
-                    //       );
-                    //       await intent.launch();
-                    //     },
-                    //   )
-                    // : SizedBox(),
-                    // SizedBox(
-                    //   width: MediaQuery.of(context).size.width * 0.03,
-                    // ),
-                    filterData.socialMedia.facebook != "null"
-                        ? InkWell(
-                            onTap: () async {
-                              AndroidIntent intent = AndroidIntent(
-                                action: 'action_view',
-                                data: filterData.socialMedia.facebook,
-                              );
-                              await intent.launch();
-                            },
-                            child: const NeuButton(
-                              char: 'f',
-                            ),
-                          )
-                        : SizedBox(),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    // filterData.socialMedia.facebook != "null"
-                    //     ? InkWell(
-                    //         onTap: () async {
-                    //           AndroidIntent intent = const AndroidIntent(
-                    //             action: 'action_view',
-                    //             data: 'https://www.instagram.com/radiosurabhi/',
-                    //           );
-                    //           await intent.launch();
-                    //         },
-                    //         child: const NeuButton(
-                    //           char: 'i',
-                    //         ),
-                    //       )
-                    //     : SizedBox(),
-                  ],
-                ),
-              )
+                child: SizedBox(
+                  height: 50,
+                  child: Row(
+                    children: [
+                      //filterData.socialMedia.facebook != "null"
+                      // ? InkWell(
+                      //     child: const NeuButton(
+                      //       char: 'y',
+                      //     ),
+                      //     onTap: () async {
+                      //       AndroidIntent intent = const AndroidIntent(
+                      //         action: 'action_view',
+                      //         data: 'https://www.youtube.com/c/RadioSurabhi',
+                      //       );
+                      //       await intent.launch();
+                      //     },
+                      //   )
+                      // : SizedBox(),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width * 0.03,
+                      // ),
+                      filterData.socialMedia.facebook != 'null'
+                          ? InkWell(
+                              onTap: filterData.socialMedia.facebook == "null"
+                                  ? null
+                                  : () async {
+                                      AndroidIntent intent = AndroidIntent(
+                                        action: 'action_view',
+                                        data: filterData.socialMedia.facebook,
+                                      );
+                                      await intent.launch();
+                                    },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/f.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ))
+                          : Container(),
+                      if (filterData.socialMedia.facebook != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+                      // InkWell(
+                      //   onTap: () async {},
+                      //   child: SizedBox(
+                      //     width: 30,
+                      //     child: SvgPicture.asset(
+                      //       "assets/insta.svg",
+                      //       fit: BoxFit.contain,
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width * 0.03,
+                      // ),
+                      filterData.socialMedia.twitter != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.twitter,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/tw.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      if (filterData.socialMedia.twitter != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+                      filterData.socialMedia.linkedin != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.linkedin,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/linked.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      if (filterData.socialMedia.linkedin != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+                      filterData.socialMedia.instagram != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.instagram,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/insta.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      if (filterData.socialMedia.instagram != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+                      filterData.socialMedia.spotify != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.spotify,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/spotify.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      if (filterData.socialMedia.spotify != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+
+                      filterData.socialMedia.website != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.website,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/website.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      if (filterData.socialMedia.website != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+
+                      filterData.socialMedia.soundcloud != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.soundcloud,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/soundcloud.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      if (filterData.socialMedia.soundcloud != 'null')
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+
+                      filterData.socialMedia.youtube != 'null'
+                          ? InkWell(
+                              onTap: () async {
+                                AndroidIntent intent = AndroidIntent(
+                                  action: 'action_view',
+                                  data: filterData.socialMedia.youtube,
+                                );
+                                await intent.launch();
+                              },
+                              child: SizedBox(
+                                width: 30,
+                                child: SvgPicture.asset(
+                                  "assets/you.svg",
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  ),
+                ))
             : Text(''),
         Padding(
           padding: const EdgeInsets.only(top: 20.0),
           child: Textwidget(
             data: filterData.name,
             isheading1: false,
-            isheading2: false,
-            isheading3: true,
+            isheading2: true,
+            isheading3: false,
           ),
         ),
         Padding(
@@ -155,13 +315,12 @@ class _YourhostState extends State<Yourhost> {
               scrollDirection: Axis.vertical,
               physics: const ScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return Textwidget(
-                  data:
-                      filterData.description.blocks[index].data.text.toString(),
-                  isheading1: false,
-                  isheading2: false,
-                  isheading3: false,
-                );
+                return Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                        filterData.description.blocks[index].data.text
+                            .toString(),
+                        style: TextStyle(fontSize: 14, height: 1.6)));
               }),
         ),
       ],
@@ -172,8 +331,8 @@ class _YourhostState extends State<Yourhost> {
       double screenheight) {
     return Image.network(
       assetname,
-      width: screenwidth * 0.85,
-      height: screenheight * 0.3,
+      width: screenwidth * 0.95,
+      // height: screenheight * 0.3,
       fit: BoxFit.cover,
     );
   }

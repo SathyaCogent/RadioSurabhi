@@ -4,29 +4,32 @@ import 'package:flutter_svg/svg.dart';
 import 'package:radiosurabhi/ui/widgets/app_scaffold.dart';
 import 'package:radiosurabhi/ui/widgets/social_button.dart';
 import 'package:radiosurabhi/ui/widgets/text_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUS extends StatelessWidget {
   const ContactUS({Key? key}) : super(key: key);
 
   @override
-  Future<void> launchUrl(String url) async {
-    final _canLaunch = await launchUrl(url);
+  // Future<void> launchUrl(String url) async {
+  //   final _canLaunch = await launchUrl(url);
 
-    if (url.startsWith("https://www.facebook.com/")) {
-      const url2 = "https://www.facebook.com/RadioSurabhi";
-      final intent2 = const AndroidIntent(action: "action_view", data: url2);
-      final canWork = await intent2.canResolveActivity();
-      if (canWork!) return intent2.launch();
-    }
-    final intent = AndroidIntent(action: "action_view", data: url);
-    return intent.launch();
-  }
+  //   if (url.startsWith("https://www.facebook.com/")) {
+  //     const url2 = "https://www.facebook.com/RadioSurabhi";
+  //     final intent2 = const AndroidIntent(action: "action_view", data: url2);
+  //     final canWork = await intent2.canResolveActivity();
+  //     if (canWork!) return intent2.launch();
+  //   }
+  //   final intent = AndroidIntent(action: "action_view", data: url);
+  //   return intent.launch();
+  // }
 
   Widget build(BuildContext context) {
     var screenwidth = MediaQuery.of(context).size.width;
     var screenheight = MediaQuery.of(context).size.height;
     return AppScaffold(
         heading: 'Contact Us',
+        appicon: true,
+        bottom: true,
         back: true,
         body: SingleChildScrollView(
             child: Container(
@@ -83,26 +86,42 @@ class ContactUS extends StatelessWidget {
                                 isheading3: true,
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: screenheight * 0.03),
-                              child: const Textwidget(
-                                data: "Email: info@radiosurabhi.com",
-                                isheading1: false,
-                                isheading2: false,
-                                isheading3: true,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: screenheight * 0.01),
-                              child: const Textwidget(
-                                data: "Phone: 469-701-0615",
-                                isheading1: false,
-                                isheading2: false,
-                                isheading3: true,
-                              ),
-                            ),
+                            InkWell(
+                                onTap: () async {
+                                  final Uri launchUri = Uri(
+                                    scheme: 'mailto',
+                                    path: 'info@radiosurabhi.com',
+                                  );
+                                  await launchUrl(launchUri);
+                                },
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.only(top: screenheight * 0.03),
+                                  child: const Textwidget(
+                                    data: "Email: info@radiosurabhi.com",
+                                    isheading1: false,
+                                    isheading2: false,
+                                    isheading3: true,
+                                  ),
+                                )),
+                            InkWell(
+                                onTap: () async {
+                                  final Uri launchUri = Uri(
+                                    scheme: 'tel',
+                                    path: '4697010615',
+                                  );
+                                  await launchUrl(launchUri);
+                                },
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.only(top: screenheight * 0.01),
+                                  child: const Textwidget(
+                                    data: "Phone: 469-701-0615",
+                                    isheading1: false,
+                                    isheading2: false,
+                                    isheading3: true,
+                                  ),
+                                )),
                             Padding(
                               padding:
                                   EdgeInsets.only(top: screenheight * 0.05),
