@@ -84,4 +84,4 @@ class NavigationService {
   static Future<dynamic> navigateTo(String routeName) {
     return navigatorKey.currentState!.pushNamed(routeName);
   }
-}
+} 
