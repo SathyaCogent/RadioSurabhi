@@ -4,6 +4,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:radiosurabhi/ui/widgets/successtoast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -75,6 +76,9 @@ class _AppScaffoldState extends State<AppScaffold> {
   Connectivity connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> subscription;
   bool opendrawer = false;
+  late ScrollController _scrollViewController;
+  bool _showAppbar = true;
+  bool isScrollingDown = false;
   Future<void> share() async {
     await FlutterShare.share(
         title: 'Radio Surabhi',
@@ -140,6 +144,27 @@ class _AppScaffoldState extends State<AppScaffold> {
       });
     });
     PerfectVolumeControl.hideUI = true;
+
+    _scrollViewController = new ScrollController();
+    _scrollViewController.addListener(() {
+      if (_scrollViewController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (!isScrollingDown) {
+          isScrollingDown = true;
+          _showAppbar = false;
+          setState(() {});
+        }
+      }
+
+      if (_scrollViewController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (isScrollingDown) {
+          isScrollingDown = false;
+          _showAppbar = true;
+          setState(() {});
+        }
+      }
+    });
   }
 
   @override
@@ -147,6 +172,8 @@ class _AppScaffoldState extends State<AppScaffold> {
     super.dispose();
     subscription.cancel();
     //PerfectVolumeControl.stream.
+    _scrollViewController.dispose();
+    _scrollViewController.removeListener(() {});
   }
 
   void checkConnectivity() async {
@@ -338,213 +365,23 @@ class _AppScaffoldState extends State<AppScaffold> {
     // Returns a string with the format mm:ss
   }
 
+  var isLandscape;
+
   @override
   Widget build(BuildContext context) {
+    isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     log('eeeeeeeee' + MyApp.audioPlayer.isPlaying.value.toString());
 
     return Scaffold(
       endDrawerEnableOpenDragGesture: false,
 
-      /* floatingActionButton: FloatingActionButton(
-          elevation: 0.0,
-          child: Icon(Icons.call),
-          backgroundColor: HexColor('#fc5252'),
-          splashColor: HexColor('#e83e8c'),
-          focusColor: HexColor('#e83e8c'),
-          onPressed: () async {
-            /* final Uri launchUri = Uri(
-              scheme: 'tel',
-              path: '9442102251',
-            );
-            await launchUrl(launchUri);*/
-
-            if (HomePage.isplayings) {
-              setState(() {
-                HomePage.hidetempradio = true;
-              });
-            }
-            openCallBottom(context);
-          }),*/
-      appBar: AppBar(
-        elevation: 0,
-        bottom: widget.bottom
-            ? PreferredSize(
-                preferredSize: const Size.fromHeight(5.0),
-                child: SizedBox(
-                    height: 3,
-                    width: MediaQuery.of(context).size.width,
-                    child: ValueListenableBuilder<bool>(
-                        valueListenable: AudioWebViewPage.loading,
-                        builder:
-                            (BuildContext context, bool value, Widget? child) {
-                          if (value && widget.bottom) {
-                            return const LinearProgressIndicator(
-                                backgroundColor: Colors.white,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.green));
-                          } else {
-                            return Container();
-                          }
-                        })))
-            : PreferredSize(
-                preferredSize: const Size.fromHeight(5.0), child: Container()),
-        backgroundColor: HexColor("#1e2a9c"),
-        title: Text(
-          widget.heading ?? '',
-          style: TextStyle(fontSize: 16),
-        ),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        leadingWidth: 130,
-        leading: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (widget.back || HomePage.isplayvideo)
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.white,
-                  size: 18,
-                ),
-                onPressed: () async {
-                  //Navigator.pop(context);
-                  Navigator.pushReplacementNamed(context, '/homepage');
-                  SystemChrome.setPreferredOrientations(
-                      DeviceOrientation.values);
-                  HelpPage.ishelpvideoplay = false;
-                  Archives.isplayvideo = false;
-                  HomePage.isplayvideo = false;
-
-                  if (MyApp.playerstate.value.toString() ==
-                      'PlayerState.pause') {
-                    await MyApp.audioPlayer.stop();
-                    await MyApp.audioPlayer.playOrPause();
-                  }
-                },
-              ),
-            if (widget.appicon)
-              SizedBox(
-                  //  height: 20,
-                  width: widget.back
-                      ? 80
-                      : HomePage.isplayvideo
-                          ? 80
-                          : 105,
-                  child: Image.asset(
-                    "assets/images/radio_logo.png",
-                  )),
-          ],
-        ),
-        actions: [
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.notifications,
-          //     size: 25,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.pushNamed(context, '/newspage');
-          //   },
-          // ),
-
-          SizedBox(
-              width: 25,
-              child: FloatingActionButton(
-                  elevation: 0.0,
-                  child: Icon(
-                    Icons.call,
-                    size: 15,
-                  ),
-                  backgroundColor: HexColor('#fc5252'),
-                  splashColor: HexColor('#e83e8c'),
-                  focusColor: HexColor('#e83e8c'),
-                  onPressed: () async {
-                    /* final Uri launchUri = Uri(
-              scheme: 'tel',
-              path: '9442102251',
-            );
-            await launchUrl(launchUri);*/
-
-                    if (HomePage.isplayings) {
-                      setState(() {
-                        HomePage.hidetempradio = true;
-                      });
-                    }
-                    openCallBottom(context);
-                  })),
-
-          const SizedBox(width: 5),
-          const Padding(padding: EdgeInsets.only(left: 4)),
-
-          !HomePage.isplayvideo &&
-                  !Archives.isplayvideo &&
-                  !HelpPage.ishelpvideoplay &&
-                  !widget.temphidedrawer
-              ? InkWell(
-                  child: SizedBox(
-                    width: 30,
-                    child: SvgPicture.asset(
-                      "assets/Menu.svg",
-                      fit: BoxFit.contain,
-                      color: Colors.white,
-                    ),
-                  ),
-                  onTap: () {
-                    //on drawer menu pressed
-                    if (_drawerscaffoldkey.currentState!.isEndDrawerOpen) {
-                      //if drawer is open, then close the drawer
-                      Navigator.pop(context);
-                      setState(() {
-                        opendrawer = false;
-                      });
-                    } else {
-                      _drawerscaffoldkey.currentState!.openEndDrawer();
-                      //if drawer is closed then open the drawer.
-                      setState(() {
-                        opendrawer = true;
-                      });
-                    }
-                  },
-                )
-              : Container(),
-          // IconButton(
-          //   onPressed: () {
-          //     //on drawer menu pressed
-          //     if (_drawerscaffoldkey.currentState!.isEndDrawerOpen) {
-          //       //if drawer is open, then close the drawer
-          //       Navigator.pop(context);
-          //       setState(() {
-          //         opendrawer = false;
-          //       });
-          //     } else {
-          //       _drawerscaffoldkey.currentState!.openEndDrawer();
-          //       //if drawer is closed then open the drawer.
-          //       setState(() {
-          //         opendrawer = true;
-          //       });
-          //     }
-          //   },
-          //   icon: opendrawer
-          //       ? const Icon(
-          //           Icons.close,
-          //           size: 30,
-          //         )
-          //       : const Icon(
-          //           Icons.menu,
-          //           size: 30,
-          //         ),
-          // ),
-          const SizedBox(
-            width: 20,
-          )
-        ],
-      ),
       bottomNavigationBar: HomePage.isplayings &&
               !HomePage.isplayvideo &&
               !Archives.isplayvideo &&
               !HelpPage.ishelpvideoplay &&
               !HomePage.hidetempradio
           ? SizedBox(
-              height: 130,
+              height: 120,
               child: _buildBottomStream(),
             )
           : SizedBox(
@@ -565,15 +402,6 @@ class _AppScaffoldState extends State<AppScaffold> {
         child: Column(children: <Widget>[
           Expanded(
               child: Container(
-                  // decoration: BoxDecoration(
-                  //     gradient: LinearGradient(
-                  //   begin: Alignment.topCenter,
-                  //   end: Alignment.bottomCenter,
-                  //   colors: [
-                  //     HexColor("#3b29a1"),
-                  //     HexColor("#ab3c90"),
-                  //   ],
-                  // )),
                   child:
                       ListView(padding: const EdgeInsets.all(0.0), children: <
                           Widget>[
@@ -654,41 +482,16 @@ class _AppScaffoldState extends State<AppScaffold> {
                 Navigator.pushNamed(context, '/newspage');
               },
             ),
-            /*    Divider(color: Colors.white),
-                              ListTile(
-                                visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                title: Text('kids',
-                                    style: TextStyle(fontSize: 15, color: Colors.white)),
-                              ),*/
             const Divider(color: Colors.white),
             ListTile(
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               title: const Text('ABOUT US',
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               onTap: () async {
-                // toWebView(context,
-                //     "http://www.radiosurabhi.com/aboutus.html",
-                //     title: 'About Us');
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/aboutus');
               },
             ),
-            // const Divider(color: Colors.white),
-            // const ListTile(
-            //   visualDensity:
-            //       VisualDensity(horizontal: 0, vertical: -4),
-            //   title: Text('SHARE',
-            //       style:
-            //           TextStyle(fontSize: 15, color: Colors.white)),
-            // ),
-            // const Divider(color: Colors.white),
-            // const ListTile(
-            //   visualDensity:
-            //       VisualDensity(horizontal: 0, vertical: -4),
-            //   title: Text('SCHEDULES',
-            //       style:
-            //           TextStyle(fontSize: 15, color: Colors.white)),
-            // ),
             const Divider(color: Colors.white),
             ListTile(
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -715,12 +518,6 @@ class _AppScaffoldState extends State<AppScaffold> {
               title: const Text('SHARE THIS APP',
                   style: TextStyle(fontSize: 15, color: Colors.white)),
               onTap: () async {
-                // AndroidIntent intent = const AndroidIntent(
-                //   action: 'action_view',
-                //   data:
-                //       'https://play.google.com/store/apps/details?id=com.cogent.radiosurabhi',
-                // );
-                // await intent.launch();
                 share();
               },
             ),
@@ -737,15 +534,6 @@ class _AppScaffoldState extends State<AppScaffold> {
             const Divider(color: Colors.white),
           ]))),
           Container(
-              /*decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      HexColor("#ab3c90"),
-                      HexColor("#ab3c90"),
-                    ],
-                  )),*/
               child: Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: Column(
@@ -833,8 +621,157 @@ class _AppScaffoldState extends State<AppScaffold> {
         ]),
       )),
 
-      body: widget
-          .body!, // bottomNavigationBar: BottomNavBarWidget(widget.index),
+      body: SafeArea(
+          child: Column(children: <Widget>[
+        AnimatedContainer(
+          height: isLandscape
+              ? _showAppbar
+                  ? 56.0
+                  : 0.0
+              : 56.0,
+          duration: Duration(milliseconds: 200),
+          child: AppBar(
+            elevation: 0,
+            bottom: widget.bottom
+                ? PreferredSize(
+                    preferredSize: const Size.fromHeight(5.0),
+                    child: SizedBox(
+                        height: 3,
+                        width: MediaQuery.of(context).size.width,
+                        child: ValueListenableBuilder<bool>(
+                            valueListenable: AudioWebViewPage.loading,
+                            builder: (BuildContext context, bool value,
+                                Widget? child) {
+                              if (value && widget.bottom) {
+                                return const LinearProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.green));
+                              } else {
+                                return Container();
+                              }
+                            })))
+                : PreferredSize(
+                    preferredSize: const Size.fromHeight(5.0),
+                    child: Container()),
+            backgroundColor: HexColor("#1e2a9c"),
+            title: Text(
+              widget.heading ?? '',
+              style: TextStyle(fontSize: 16),
+            ),
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            leadingWidth: 130,
+            leading: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (widget.back || HomePage.isplayvideo)
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    onPressed: () async {
+                      //Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/homepage');
+                      SystemChrome.setPreferredOrientations(
+                          DeviceOrientation.values);
+                      HelpPage.ishelpvideoplay = false;
+                      Archives.isplayvideo = false;
+                      HomePage.isplayvideo = false;
+
+                      if (MyApp.playerstate.value.toString() ==
+                          'PlayerState.pause') {
+                        await MyApp.audioPlayer.stop();
+                        await MyApp.audioPlayer.playOrPause();
+                      }
+                    },
+                  ),
+                if (widget.appicon)
+                  SizedBox(
+                      //  height: 20,
+                      width: widget.back
+                          ? 80
+                          : HomePage.isplayvideo
+                              ? 80
+                              : 105,
+                      child: Image.asset(
+                        "assets/images/radio_logo.png",
+                      )),
+              ],
+            ),
+            actions: [
+              SizedBox(
+                  width: 25,
+                  child: FloatingActionButton(
+                      elevation: 0.0,
+                      child: Icon(
+                        Icons.call,
+                        size: 15,
+                      ),
+                      backgroundColor: HexColor('#fc5252'),
+                      splashColor: HexColor('#e83e8c'),
+                      focusColor: HexColor('#e83e8c'),
+                      onPressed: () async {
+                        if (HomePage.isplayings) {
+                          setState(() {
+                            HomePage.hidetempradio = true;
+                          });
+                        }
+                        openCallBottom(context);
+                      })),
+              const SizedBox(width: 5),
+              const Padding(padding: EdgeInsets.only(left: 4)),
+              !HomePage.isplayvideo &&
+                      !Archives.isplayvideo &&
+                      !HelpPage.ishelpvideoplay &&
+                      !widget.temphidedrawer
+                  ? InkWell(
+                      child: SizedBox(
+                        width: 30,
+                        child: SvgPicture.asset(
+                          "assets/Menu.svg",
+                          fit: BoxFit.contain,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        //on drawer menu pressed
+                        if (_drawerscaffoldkey.currentState!.isEndDrawerOpen) {
+                          //if drawer is open, then close the drawer
+                          Navigator.pop(context);
+                          setState(() {
+                            opendrawer = false;
+                          });
+                        } else {
+                          _drawerscaffoldkey.currentState!.openEndDrawer();
+                          //if drawer is closed then open the drawer.
+                          setState(() {
+                            opendrawer = true;
+                          });
+                        }
+                      },
+                    )
+                  : Container(),
+              const SizedBox(
+                width: 20,
+              )
+            ],
+          ),
+        ),
+        Expanded(
+            child: isLandscape
+                ? Scrollbar(
+                    child: Center(
+                        child: SingleChildScrollView(
+                            controller: _scrollViewController,
+                            child: widget.body!)))
+                : Center(
+                    child: SingleChildScrollView(
+                        controller: _scrollViewController,
+                        child: widget.body!)))
+      ])), // bottomNavigationBar: BottomNavBarWidget(widget.index),
     );
   }
 
@@ -1148,11 +1085,32 @@ class _AppScaffoldState extends State<AppScaffold> {
                                                   fontSize: 17,
                                                   color: Colors.white));
                                         })),
-                                Text(
-                                  'Live'.toUpperCase(),
-                                  style: TextStyle(
-                                      fontSize: 17, color: Colors.white),
-                                ),
+                                ValueListenableBuilder<PlayerState>(
+                                    valueListenable: MyApp.playerstate,
+                                    builder: (BuildContext context,
+                                        PlayerState value, Widget? child) {
+                                      return Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                                color: value == PlayerState.play
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(50)),
+                                          ),
+                                          SizedBox(width: 6),
+                                          Text(
+                                            'Live'.toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      );
+                                    })
                               ],
                             )),
                         /*Row(
