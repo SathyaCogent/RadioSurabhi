@@ -15,7 +15,7 @@ class _ShowsPageState extends State<ShowsPage> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      if (HomePage.popupinfo) popup(context);
+      popup(context);
     });
   }
 
@@ -25,67 +25,82 @@ class _ShowsPageState extends State<ShowsPage> {
       heading: "Shows",
       bottombar: true,
       appicon: true,
-       back: true,
+      back: true,
       body: _getBodyWidget(),
     );
   }
 
   Widget _getBodyWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: HexColor('#c8d4df'), width: 2)),
-        child: HorizontalDataTable(
-          leftHandSideColumnWidth: 100,
-          rightHandSideColumnWidth: 1400,
-          isFixedHeader: true,
-          headerWidgets: _getTitleWidget(),
-          leftSideItemBuilder: _generateFirstColumnRow,
-          rightSideItemBuilder: _generateRightHandSideColumnRow,
-          itemCount: showsModel.showsInfo.length,
-          rowSeparatorWidget: const Divider(
-            color: Colors.grey,
-            height: 1.0,
-            thickness: 1,
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+          padding: const EdgeInsets.fromLTRB(15.0, 20, 10, 10),
+          child: Text(
+            'Schedule and shows on Radio Surabhi 104.9 FM.',
+            textAlign: TextAlign.start,
+            style: TextStyle(fontSize: 17, color: HexColor('#2e2d2e')),
+          )),
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: HexColor('#2e2d2e'), width: 2)),
+          child: HorizontalDataTable(
+            leftHandSideColumnWidth: 170,
+            rightHandSideColumnWidth: 1680,
+            isFixedHeader: true,
+            headerWidgets: _getTitleWidget(),
+            leftSideItemBuilder: _generateFirstColumnRow,
+            rightSideItemBuilder: _generateRightHandSideColumnRow,
+            itemCount: showsModel.showsInfo.length,
+            rowSeparatorWidget: Divider(
+              color: HexColor('#d3d3d3'),
+              height: 1.0,
+              thickness: 2.5,
+            ),
+            leftHandSideColBackgroundColor: const Color(0xFFFFFFFF),
+            rightHandSideColBackgroundColor: const Color(0xFFFFFFFF),
+            verticalScrollbarStyle: const ScrollbarStyle(
+              thumbColor: Colors.yellow,
+              isAlwaysShown: true,
+              thickness: 4.0,
+              radius: Radius.circular(5.0),
+            ),
+            horizontalScrollbarStyle: const ScrollbarStyle(
+              thumbColor: Colors.red,
+              isAlwaysShown: true,
+              thickness: 4.0,
+              radius: Radius.circular(5.0),
+            ),
           ),
-          leftHandSideColBackgroundColor: const Color(0xFFFFFFFF),
-          rightHandSideColBackgroundColor: const Color(0xFFFFFFFF),
-          verticalScrollbarStyle: const ScrollbarStyle(
-            thumbColor: Colors.yellow,
-            isAlwaysShown: true,
-            thickness: 4.0,
-            radius: Radius.circular(5.0),
-          ),
-          horizontalScrollbarStyle: const ScrollbarStyle(
-            thumbColor: Colors.red,
-            isAlwaysShown: true,
-            thickness: 4.0,
-            radius: Radius.circular(5.0),
-          ),
+          height: 455,
         ),
-        height: 420,
-      ),
-    );
+      )
+    ]);
   }
 
   List<Widget> _getTitleWidget() {
     return [
-      _getTitleItemWidget('Timing', 200),
-      _getTitleItemWidget('Monday', 200),
-      _getTitleItemWidget('Tuesday', 200),
-      _getTitleItemWidget('Wednesday', 200),
-      _getTitleItemWidget('Thursday', 200),
-      _getTitleItemWidget('Friday', 200),
-      _getTitleItemWidget('Saturday', 200),
-      _getTitleItemWidget('Sunday', 200),
+      _getTitleItemWidget('Timing', 170),
+      _getTitleItemWidget('Monday', 240),
+      _getTitleItemWidget('Tuesday', 240),
+      _getTitleItemWidget('Wednesday', 240),
+      _getTitleItemWidget('Thursday', 240),
+      _getTitleItemWidget('Friday', 240),
+      _getTitleItemWidget('Saturday', 240),
+      _getTitleItemWidget('Sunday', 240),
     ];
   }
 
   Widget _getTitleItemWidget(String label, double width) {
     return Container(
-      color: label == "Timing" ? HexColor('#71a1dd') : HexColor('#4d9de6'),
+      decoration: BoxDecoration(
+          color: label == "Timing" ? HexColor('#c122b0') : HexColor('#06019c'),
+          border: Border(
+              right: BorderSide(
+            color: HexColor('#d3d3d3'),
+            width: 2.5,
+          ))),
       child: Center(
           child: Text(label,
               style: const TextStyle(
@@ -94,22 +109,32 @@ class _ShowsPageState extends State<ShowsPage> {
                   fontSize: 18))),
       width: width,
       height: 56,
-      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+      padding: const EdgeInsets.all(10),
       alignment: Alignment.centerLeft,
     );
   }
 
   Widget _generateFirstColumnRow(BuildContext context, int index) {
     return Container(
-      color: index % 2 == 0 ? HexColor('#e6edf5') : Colors.white,
-      child: Center(
-          child: Text(showsModel.showsInfo[index].timing,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14))),
-      width: 100,
-      height: 56,
-      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+      decoration: BoxDecoration(
+        border: Border(
+            right: BorderSide(
+          color: HexColor('#d3d3d3'),
+          width: 2.5,
+        )),
+        //color: index % 2 == 0 ? HexColor('#e6edf5') : Colors.white,
+        color: index % 2 == 0 ? HexColor('#eaf0fe') : HexColor('#eaf0fe'),
+      ),
       alignment: Alignment.centerLeft,
+      child: Text(showsModel.showsInfo[index].timing,
+          textAlign: TextAlign.start,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          )),
+      width: 60,
+      height: 65,
+      padding: const EdgeInsets.all(10),
     );
   }
 
@@ -117,87 +142,122 @@ class _ShowsPageState extends State<ShowsPage> {
     return Row(children: <Widget>[
       Row(children: <Widget>[
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].monday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              color: HexColor('#d3d3d3'),
+              width: 2.5,
+            )),
+            color: index % 2 == 0 ? Colors.white : Colors.white,
+          ),
+          child: Text(showsModel.showsInfo[index].monday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].tuesday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              color: HexColor('#d3d3d3'),
+              width: 2.5,
+            )),
+            color: index % 2 == 0 ? Colors.white : Colors.white,
+          ),
+          child: Text(showsModel.showsInfo[index].tuesday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].wednesday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              color: HexColor('#d3d3d3'),
+              width: 2.5,
+            )),
+            color: index % 2 == 0 ? Colors.white : Colors.white,
+          ),
+          child: Text(showsModel.showsInfo[index].wednesday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].thursday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              color: HexColor('#d3d3d3'),
+              width: 2.5,
+            )),
+            color: index % 2 == 0 ? Colors.white : Colors.white,
+          ),
+          child: Text(showsModel.showsInfo[index].thursday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].friday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              color: HexColor('#d3d3d3'),
+              width: 2.5,
+            )),
+            color: index % 2 == 0 ? Colors.white : Colors.white,
+          ),
+          child: Text(showsModel.showsInfo[index].friday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].saturday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              color: HexColor('#d3d3d3'),
+              width: 2.5,
+            )),
+            color: index % 2 == 0 ? Colors.white : Colors.white,
+          ),
+          child: Text(showsModel.showsInfo[index].saturday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
         Container(
-          color: index % 2 == 0 ? HexColor('#d9eafa') : Colors.white,
-          child: Center(
-              child: Text(showsModel.showsInfo[index].sunday,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14))),
-          width: 200,
-          height: 56,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          color: index % 2 == 0 ? Colors.white : Colors.white,
+          child: Text(showsModel.showsInfo[index].sunday,
+              textAlign: TextAlign.left,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          width: 240,
+          height: 65,
+          padding: const EdgeInsets.all(10),
           alignment: Alignment.centerLeft,
         ),
       ])
@@ -210,57 +270,57 @@ ShowsInfoModel showsModel = ShowsInfoModel();
 class ShowsInfoModel {
   List<ShowsInfo> showsInfo = [
     ShowsInfo(
-        "7.00 to 7.30",
-        "Concious Living",
-        "Concious Living",
-        "Concious Living",
-        "Concious Living",
-        "Concious Living",
-        "Concious Living",
-        "Concious Living"),
+        "07:30 am - 08:00 am",
+        "Conscious Living with Amba Lakshmi",
+        "Conscious Living with Amba Lakshmi",
+        "Conscious Living with Amba Lakshmi",
+        "Conscious Living with Amba Lakshmi",
+        "Conscious Living with Amba Lakshmi",
+        "Conscious Living with Amba Lakshmi",
+        "Conscious Living with Amba Lakshmi"),
     ShowsInfo(
-        "7.30 to 10.00",
+        "8:00 am - 10:00 am ",
         "Morning Show with Avinash - Chalo India",
         "Morning Show with Avinash - Chalo India",
         "Morning Show with Avinash - Chalo India",
         "Morning Show with Avinash - Chalo India",
         "Morning Show with Avinash - Chalo India",
-        "None",
-        "Aadivaram Madhurimalu"),
+        "సురభి పాటల తోట",
+        "సురభి పాటల తోట"),
     ShowsInfo(
-        "10.00 to 01.00",
-        "Miscellaneous Muchatlu - Sweet n Spicy Potpourri",
-        "Miscellaneous Muchatlu - Sweet n Spicy Potpourri",
-        "Miscellaneous Muchatlu - Sweet n Spicy Potpourri",
-        "Miscellaneous Muchatlu - Sweet n Spicy Potpourri",
-        "Miscellaneous Muchatlu - Sweet n Spicy Potpourri",
-        "Signature Show",
-        "Signature Show"),
+        "10:00 am - 01:00 pm",
+        "సురభి పాటల తోట",
+        "సురభి పాటల తోట",
+        "సురభి పాటల తోట",
+        "Te Ra (Telugu Rangasthalam) with Rajeswari, Bhaskar Rayavaram (11am -1am)",
+        "Harivillu with Pavani",
+        "Signature Show with Rajeswari, Bhaskar, Ravi and Venu",
+        "Signature Show with Rajeswari, Bhaskar, Ravi and Venu"),
     ShowsInfo(
-        "01.00 to 04.00",
-        "Madhyanam Masti",
-        "Madhyanam Masti",
-        "Madhyanam Masti",
-        "Madhyanam Masti",
-        "Madhyanam Masti",
-        "Bala Vinodam",
-        "Sports Column with Giri"),
+        "01:00 pm - 04:00 pm",
+        "సురభి పాటల తోట",
+        "Manasu Palika with Vasavi ",
+        "సురభి పాటల తోట",
+        "సురభి పాటల తోట",
+        "Simply Sindhu",
+        "Sports Column with Giri",
+        "Musical Bouquet with Raja"),
     ShowsInfo(
-        "04.00 to 07.00",
-        "Drive Time Special",
-        "Drive Time Special",
-        "Drive Time Special",
-        "Drive Time Special",
-        "Drive Time Special",
-        "Drive Time With Ashwin",
-        "Drive Time With Srikanth"),
+        "04:00 pm to 07:00 pm",
+        "Drive Time Special - మీ..రా.. అంటే మీతో రాజేశ్వరి.",
+        "Drive Time Special - మీ..రా.. అంటే మీతో రాజేశ్వరి.",
+        "Drive Time Special - మీ..రా.. అంటే మీతో రాజేశ్వరి.",
+        "Drive Time Special - మీ..రా.. అంటే మీతో రాజేశ్వరి.",
+        "Drive Time Special - మీ..రా.. అంటే మీతో రాజేశ్వరి.",
+        "Zara Mass Zara Class with RJ Ashwin",
+        "Saradaga Kasepu with RJ Srikanth"),
     ShowsInfo(
-        "07.00 to 10.00",
-        "Vasa pitta Vaasavi",
-        "Iqbal tho aa rojulloki",
-        "Madhurimalu",
-        "Chi.la.sow.Sravanthi",
-        "Celebrity Time",
+        "07:00 pm to 10:00 pm",
+        "Non Stop fun with Vasavi Palla",
+        "Iqbal toh Aa Rojullo",
+        "Madhurimalu with RJ Madhurima",
+        "Chithram Vichitram with Anuradha Patri and Sarath Jyotsana",
+        "Made in India with Madhu Sravanthi",
         "B Plus with Bhaskar",
         "none"),
   ];
@@ -274,7 +334,10 @@ Future<void> popup(BuildContext context) async {
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
         return AlertDialog(
-          backgroundColor: Colors.black87,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Color.fromRGBO(14, 24, 124, 1),
           content: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,7 +346,7 @@ Future<void> popup(BuildContext context) async {
                   'Scroll from Right to Left to view details',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.05,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
                       color: HexColor('#ffffff'),
                       fontFamily: "Roboto"),
                 ),
@@ -299,19 +362,17 @@ Future<void> popup(BuildContext context) async {
                 const SizedBox(height: 25),
                 Center(
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.04,
-                        width: MediaQuery.of(context).size.width * 0.25,
+                        height: 50,
+                        width: 80,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 primary: HexColor("#ffffff"),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderRadius: BorderRadius.circular(15.0),
                                 )),
                             child: Text('ok',
                                 style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.04,
+                                    fontSize: 18,
                                     fontFamily: "Roboto",
                                     color: Colors.black)),
                             onPressed: () {
