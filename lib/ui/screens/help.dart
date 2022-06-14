@@ -219,7 +219,8 @@ class _HelpPageState extends State<HelpPage> {
                               ),
                             ),
                           ),
-                          Text("  You will find an option for HD4",
+                          Text(
+                              "  You will find an option for Radio Surabhi 104.9FM HD4",
                               style: TextStyle(fontSize: 14, height: 1.6)),
                         ],
                       ),
@@ -306,7 +307,7 @@ class _HelpPageState extends State<HelpPage> {
     return Image.asset(
       assetname,
       width: screenwidth * 0.85,
-      height: screenheight * 0.25,
+      //height: screenheight * 0.25,
       fit: BoxFit.contain,
     );
   }
